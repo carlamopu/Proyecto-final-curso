@@ -1,0 +1,254 @@
+---
+author: "Imane Fellahi, María Ángeles Herrero y Carla Morales Pujante"
+date: today
+date-format: "DD/MM/YYYY"
+toc: true
+toc-depth: 5
+toc-title: "Presentación final - Curso R UAH"
+format:
+  html:
+    link-external-newwindow: true
+    title: Proyecto final curso R
+    subtitle: Concentración de toxinas en el tiempo
+  gfm: 
+    title: "Proyecto final curso R"
+editor: visual
+---
+
+![](images/clipboard-150914030.png){width="203"}
+
+## El dataset que hemos utilizado
+
+### Nuestro objetivo:
+
+Ver la variación de la cantidad de toxinas a lo largo del tiempo con diferentes tratamientos.
+
+## Nuestro dataset:
+
+Rows: 40 Columns: 21 \$ Name <chr> "A1-0", "A1-2h", "A1-6h", "A1-1", "A1-14-0h", "A1-14-2h"… \$ Group <chr> "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "B1", "B… \$ Days <int> 0, 1, 1, 1, 14, 14, 14, 15, 0, 1, 1, 1, 14, 14, 14, 15, … \$ Hours <int> 0, 2, 6, 0, 0, 2, 6, 0, 0, 2, 6, 0, 0, 2, 6, 0, 0, 2, 6,… \$ `7D-CYN` <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… \$ ATXA <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… \$ `CYN + 7E-CYN` <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… \$ `D-MCLR` <dbl> 1.030, 1.030, 1.130, 1.060, 1.140, 1.210, 1.120, 0.930, … \$ `D-MCRR + DE-MCRR` <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… \$ `H-ATXA` <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… \$ `MC-HILR` <dbl> 0.220, 0.220, 0.210, 0.228, 0.256, 0.237, 0.219, 0.188, … \$ `MC-HTYR` <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… \$ MCLA <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… \$ `MCLF` <dbl> 1.53, 1.53, 2.01, 2.06, 3.30, 2.79, 2.71, 2.06, 2.45, 1.… \$ MCLR <dbl> 33.400, 33.400, 34.800, 33.100, 36.600, 36.000, 35.900, … \$ MCLW <dbl> 2.17, 2.17, 2.80, 2.94, 4.38, 3.70, 3.63, 2.95, 3.19, 3.… \$ MCLY <dbl> 1.46, 1.46, 1.48, 1.45, 1.93, 1.89, 1.89, 1.48, 1.61, 1.… \$ MCRR <dbl> 0.416, 0.416, 0.445, 0.408, 0.451, 0.433, 0.445, 0.329, … \$ MCWR <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… \$ MCYR <dbl> 0.216, 0.216, 0.227, 0.217, 0.230, 0.221, 0.212, 0.180, … \$ NOD <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+
+## Nuestro script para limpiar los datos:
+
+```{r}
+
+library(tidyverse)
+library(dplyr)
+toxinas <- read_delim(file = "datostoxinas.csv", delim = ";")
+
+toxinas <- read_delim(
+  file = "datostoxinas.csv",
+  delim = ";",
+  col_type = list(Nombre = "f"),
+)
+
+toxinas
+
+str(toxinas)
+
+summary(toxinas)
+
+toxinas2 <- toxinas |>
+  mutate(across(-Nombre, ~ ifelse(.x == "N.D.", 0, .x))) #todos los N.D, son 0
+
+#Entonces [^0-9.]+ significa:
+
+#“uno o más caracteres que no sean dígitos (0–9) ni punto (.)”
+
+#Reemplazo: "" (cadena vacía) → lo borra.
+#gsub() = “global substitute” → busca un patrón y lo reemplaza en todas las filas.
+
+toxinas3 <- toxinas2 %>%
+  mutate(MCLR = as.numeric(gsub("[^0-9.]+", "", MCLR))) 
+
+#convertir los datos <al LOQ a 0
+
+#grepl("^<", columna);grepl() revisa cada valor de la columna y devuelve TRUE/FALSE.
+
+#El patrón ^< significa:  ^ = “al inicio del texto”, < = el símbolo “menor que”
+
+#Entonces detecta valores que empiezan con <, como "<0.040".
+
+
+toxinas3 <- toxinas3 |>
+  mutate(`D-MCRR + DE-MCRR ` = ifelse(grepl("^<", `D-MCRR + DE-MCRR `),
+                                      "0",
+                                      `D-MCRR + DE-MCRR `)) |>
+  mutate(`D-MCRR + DE-MCRR ` = as.numeric(`D-MCRR + DE-MCRR `))
+names(toxinas3)
+
+#same but applied for all col
+library(dplyr)
+# cortar la tabla 
+
+toxinas3 <- toxinas3 |>
+  mutate(across(where(is.character),
+                ~ as.numeric(ifelse(grepl("^<", .x), "0", .x))))
+str(toxinas3)
+toxinas4 <- toxinas3 |> 
+  slice(1:40)
+#separar e añadir columnas 
+toxinas5 <- toxinas4 %>%
+  
+  rename(Name = Nombre) %>%
+  
+  group_by(Name) %>%
+  
+  mutate(
+    
+    dup_index = row_number()
+    
+  ) %>%
+  
+  ungroup() %>%
+  
+  mutate(
+    
+    # Corrección nominal SOLO para la segunda aparición
+    
+    Name = if_else(Name == "E1-14-6h" & dup_index == 2, "E1-15", Name),
+    
+    Group = str_extract(Name, "^[A-E]1"),
+    
+    Hours = case_when(
+      
+      Name == "E1-15"                ~ 0L,
+      
+      str_detect(Name, "-(\\d+)h")   ~ as.integer(str_extract(Name, "(?<=-)\\d+(?=h)")),
+      
+      str_detect(Name, "-0$|-1$|-15$") ~ 0L,
+      
+      TRUE                           ~ NA_integer_
+      
+    ),
+    
+    Days = case_when(
+      
+      Name == "E1-15"                ~ 15L,
+      
+      str_detect(Name, "-0$")        ~ 0L,
+      
+      str_detect(Name, "-14-")       ~ 14L,
+      
+      str_detect(Name, "-15$")       ~ 15L,
+      
+      str_detect(Name, "-1$")        ~ 1L,
+      
+      str_detect(Name, "-(\\d+)h")   ~ 1L,
+      
+      TRUE                           ~ NA_integer_
+      
+    )
+    
+  ) %>%
+  
+  select(Name, Group, Days, Hours, everything(), -dup_index)
+
+
+library(tidyverse)
+library(dplyr)
+toxinas <- read_delim(file = "datostoxinas.csv", delim = ";")
+
+toxinas <- read_delim(
+  file = "datostoxinas.csv",
+  delim = ";",
+  col_type = list(Nombre = "f"),
+)
+
+toxinas
+
+str(toxinas)
+
+summary(toxinas)
+
+toxinas2 <- toxinas |>
+  mutate(across(-Nombre, ~ ifelse(.x == "N.D.", 0, .x))) #todos los N.D, son 0
+
+#Entonces [^0-9.]+ significa:
+
+#“uno o más caracteres que no sean dígitos (0–9) ni punto (.)”
+
+#Reemplazo: "" (cadena vacía) → lo borra.
+#gsub() = “global substitute” → busca un patrón y lo reemplaza en todas las filas.
+
+toxinas3 <- toxinas2 %>%
+  mutate(MCLR = as.numeric(gsub("[^0-9.]+", "", MCLR))) 
+
+#convertir los datos <al LOQ a 0
+
+#grepl("^<", columna);grepl() revisa cada valor de la columna y devuelve TRUE/FALSE.
+
+#El patrón ^< significa:  ^ = “al inicio del texto”, < = el símbolo “menor que”
+
+#Entonces detecta valores que empiezan con <, como "<0.040".
+
+
+toxinas3 <- toxinas3 |>
+  mutate(`D-MCRR + DE-MCRR ` = ifelse(grepl("^<", `D-MCRR + DE-MCRR `),
+                                     "0",
+                                     `D-MCRR + DE-MCRR `)) |>
+  mutate(`D-MCRR + DE-MCRR ` = as.numeric(`D-MCRR + DE-MCRR `))
+names(toxinas3)
+
+#same but applied for all col
+library(dplyr)
+# cortar la tabla 
+
+toxinas3 <- toxinas3 |>
+  mutate(across(where(is.character),
+                ~ as.numeric(ifelse(grepl("^<", .x), "0", .x))))
+str(toxinas3)
+toxinas4 <- toxinas3 |> 
+  slice(1:40)
+#separar e añadir columnas 
+toxinas5 <- toxinas4 %>%
+  
+  rename(Name = Nombre) %>%          # Renombramos la columna
+  # Corrección específica para la segunda aparición
+  mutate(Name = if_else(Name == "E1-14-6h", "E1-15", Name)) %>%
+  # Extraemos Group y creamos Day y Hour según reglas
+  mutate(
+    Group = str_extract(Name, "^[A-E]1"),
+    
+    # Horas
+    Hours = case_when(
+      str_detect(Name, "-0$")        ~ 0L,
+      str_detect(Name, "-1$")        ~ 24L,
+      str_detect(Name, "-15$")       ~ 24L,
+      str_detect(Name, "-\\d+h$")    ~ as.integer(str_extract(Name, "(?<=-)\\d+(?=h)")),
+      TRUE                            ~ NA_integer_
+    ),
+    
+    # Días
+    Days = case_when(
+      str_detect(Name, "-0$")        ~ 0L,
+      str_detect(Name, "-1$")        ~ 1L,
+      str_detect(Name, "-15$")       ~ 15L,
+      str_detect(Name, "-14-6h$")    ~ 15L,   # caso especial E1-15
+      str_detect(Name, "-\\d+h$")    ~ 0L,    # horas 0-6 ahora son día 0
+      TRUE                            ~ NA_integer_
+    ),
+    
+    # Tiempo total en horas
+    Time_hours = Days * 24 + Hours
+  ) %>%
+  # Reordenamos columnas para que los tratamientos estén al inicio
+  select(Name, Group, Days, Hours, Time_hours, everything())
+
+toxinas5 |>
+  mutate(across(c(Days), as.numeric))
+
+str(toxinas5)
+
+toxinas_long <- toxinas5 |> select(c(Time_hours, Group,`MCLF `, MCLW, MCLY)) |>
+  pivot_longer(cols = c(`MCLF `, MCLW, MCLY))
+
+ggplot(data = toxinas_long) + 
+  geom_col(aes(x = Time_hours, y =value, fill=name))+
+  facet_wrap("Group")
+
+ggplot(data = toxinas_long) + 
+  geom_point(aes(x = Time_hours, y =value, color=name))+
+  geom_line(aes(x = Time_hours, y =value, color=name))+
+  facet_wrap("Group")
+
+```

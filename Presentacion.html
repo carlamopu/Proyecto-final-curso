@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Imane Fellahi, María Ángeles Herrero y Carla Morales Pujante">
+
+<title>Proyecto final curso R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Presentacion_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Presentacion_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Presentacion_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Presentacion_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="Presentacion_files/libs/quarto-html/popper.min.js"></script>
+<script src="Presentacion_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Presentacion_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Presentacion_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Presentacion_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Presentacion_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Presentacion_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Presentacion_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Presentación final - Curso R UAH</h2>
+   
+  <ul>
+  <li><a href="#el-dataset-que-hemos-utilizado" id="toc-el-dataset-que-hemos-utilizado" class="nav-link active" data-scroll-target="#el-dataset-que-hemos-utilizado">El dataset que hemos utilizado</a>
+  <ul>
+  <li><a href="#nuestro-objetivo" id="toc-nuestro-objetivo" class="nav-link" data-scroll-target="#nuestro-objetivo">Nuestro objetivo:</a></li>
+  </ul></li>
+  <li><a href="#nuestro-dataset" id="toc-nuestro-dataset" class="nav-link" data-scroll-target="#nuestro-dataset">Nuestro dataset:</a></li>
+  <li><a href="#nuestro-script-para-limpiar-los-datos" id="toc-nuestro-script-para-limpiar-los-datos" class="nav-link" data-scroll-target="#nuestro-script-para-limpiar-los-datos">Nuestro script para limpiar los datos:</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Presentacion.md"><i class="bi bi-file-code"></i>Github (GFM)</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Proyecto final curso R</h1>
+<p class="subtitle lead">Concentración de toxinas en el tiempo</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Imane Fellahi, María Ángeles Herrero y Carla Morales Pujante </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">16/01/2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><img src="images/clipboard-150914030.png" class="img-fluid" width="203"></p>
+<section id="el-dataset-que-hemos-utilizado" class="level2">
+<h2 class="anchored" data-anchor-id="el-dataset-que-hemos-utilizado">El dataset que hemos utilizado</h2>
+<section id="nuestro-objetivo" class="level3">
+<h3 class="anchored" data-anchor-id="nuestro-objetivo">Nuestro objetivo:</h3>
+<p>Ver la variación de la cantidad de toxinas a lo largo del tiempo con diferentes tratamientos.</p>
+</section>
+</section>
+<section id="nuestro-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="nuestro-dataset">Nuestro dataset:</h2>
+<p>Rows: 40 Columns: 21 $ Name <chr> “A1-0”, “A1-2h”, “A1-6h”, “A1-1”, “A1-14-0h”, “A1-14-2h”… $ Group <chr> “A1”, “A1”, “A1”, “A1”, “A1”, “A1”, “A1”, “A1”, “B1”, “B… $ Days <int> 0, 1, 1, 1, 14, 14, 14, 15, 0, 1, 1, 1, 14, 14, 14, 15, … $ Hours <int> 0, 2, 6, 0, 0, 2, 6, 0, 0, 2, 6, 0, 0, 2, 6, 0, 0, 2, 6,… $ <code>7D-CYN</code> <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… $ ATXA <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… $ <code>CYN + 7E-CYN</code> <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… $ <code>D-MCLR</code> <dbl> 1.030, 1.030, 1.130, 1.060, 1.140, 1.210, 1.120, 0.930, … $ <code>D-MCRR + DE-MCRR</code> <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… $ <code>H-ATXA</code> <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… $ <code>MC-HILR</code> <dbl> 0.220, 0.220, 0.210, 0.228, 0.256, 0.237, 0.219, 0.188, … $ <code>MC-HTYR</code> <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… $ MCLA <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… $ <code>MCLF</code> <dbl> 1.53, 1.53, 2.01, 2.06, 3.30, 2.79, 2.71, 2.06, 2.45, 1.… $ MCLR <dbl> 33.400, 33.400, 34.800, 33.100, 36.600, 36.000, 35.900, … $ MCLW <dbl> 2.17, 2.17, 2.80, 2.94, 4.38, 3.70, 3.63, 2.95, 3.19, 3.… $ MCLY <dbl> 1.46, 1.46, 1.48, 1.45, 1.93, 1.89, 1.89, 1.48, 1.61, 1.… $ MCRR <dbl> 0.416, 0.416, 0.445, 0.408, 0.451, 0.433, 0.445, 0.329, … $ MCWR <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,… $ MCYR <dbl> 0.216, 0.216, 0.227, 0.217, 0.230, 0.221, 0.212, 0.180, … $ NOD <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…</dbl></dbl></dbl></dbl></dbl></dbl></dbl></dbl></dbl></dbl></dbl></dbl></dbl></dbl></dbl></dbl></dbl></int></int></chr></chr></p>
+</section>
+<section id="nuestro-script-para-limpiar-los-datos" class="level2">
+<h2 class="anchored" data-anchor-id="nuestro-script-para-limpiar-los-datos">Nuestro script para limpiar los datos:</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyverse' was built under R version 4.4.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>toxinas <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="at">file =</span> <span class="st">"datostoxinas.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 46 Columns: 18
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ";"
+chr (18): Nombre, 7D-CYN, ATXA, CYN + 7E-CYN, D-MCLR , D-MCRR + DE-MCRR , H-...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>toxinas <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">"datostoxinas.csv"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">delim =</span> <span class="st">";"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_type =</span> <span class="fu">list</span>(<span class="at">Nombre =</span> <span class="st">"f"</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>toxinas</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 46 × 18
+   Nombre   `7D-CYN` ATXA  `CYN + 7E-CYN` `D-MCLR ` `D-MCRR + DE-MCRR ` `H-ATXA`
+   &lt;fct&gt;    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;               &lt;chr&gt;   
+ 1 A1-0     N.D.     N.D.  N.D.           1.03      &lt;0.040              N.D.    
+ 2 A1-2h    N.D.     N.D.  N.D.           1.03      &lt;0.040              N.D.    
+ 3 A1-6h    N.D.     N.D.  N.D.           1.13      &lt;0.040              N.D.    
+ 4 A1-1     N.D.     N.D.  N.D.           1.06      &lt;0.040              N.D.    
+ 5 A1-14-0h N.D.     N.D.  N.D.           1.14      &lt;0.040              N.D.    
+ 6 A1-14-2h N.D.     N.D.  N.D.           1.21      &lt;0.040              N.D.    
+ 7 A1-14-6h N.D.     N.D.  N.D.           1.12      &lt;0.040              N.D.    
+ 8 A1-15    N.D.     N.D.  N.D.           0.930     &lt;0.040              N.D.    
+ 9 B1-0     N.D.     N.D.  N.D.           0.910     &lt;0.040              N.D.    
+10 B1-2h    N.D.     N.D.  N.D.           1.07      &lt;0.040              N.D.    
+# ℹ 36 more rows
+# ℹ 11 more variables: `MC-HILR` &lt;chr&gt;, `MC-HTYR` &lt;chr&gt;, MCLA &lt;chr&gt;,
+#   `MCLF ` &lt;chr&gt;, MCLR &lt;chr&gt;, MCLW &lt;chr&gt;, MCLY &lt;chr&gt;, MCRR &lt;chr&gt;, MCWR &lt;chr&gt;,
+#   MCYR &lt;chr&gt;, NOD &lt;chr&gt;</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(toxinas)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [46 × 18] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ Nombre           : Factor w/ 39 levels "A1-0","A1-2h",..: 1 2 3 4 5 6 7 8 9 10 ...
+ $ 7D-CYN           : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ $ ATXA             : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ $ CYN + 7E-CYN     : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ $ D-MCLR           : chr [1:46] "1.03" "1.03" "1.13" "1.06" ...
+ $ D-MCRR + DE-MCRR : chr [1:46] "&lt;0.040" "&lt;0.040" "&lt;0.040" "&lt;0.040" ...
+ $ H-ATXA           : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ $ MC-HILR          : chr [1:46] "0.220" "0.220" "0.210" "0.228" ...
+ $ MC-HTYR          : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ $ MCLA             : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ $ MCLF             : chr [1:46] "1.53" "1.53" "2.01" "2.06" ...
+ $ MCLR             : chr [1:46] "33.4 (*)" "33.4 (*)" "34.8 (*)" "33.1 (*)" ...
+ $ MCLW             : chr [1:46] "2.17" "2.17" "2.80" "2.94" ...
+ $ MCLY             : chr [1:46] "1.46" "1.46" "1.48" "1.45" ...
+ $ MCRR             : chr [1:46] "0.416" "0.416" "0.445" "0.408" ...
+ $ MCWR             : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ $ MCYR             : chr [1:46] "0.216" "0.216" "0.227" "0.217" ...
+ $ NOD              : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   Nombre = col_factor(levels = NULL, ordered = FALSE, include_na = FALSE),
+  ..   `7D-CYN` = col_character(),
+  ..   ATXA = col_character(),
+  ..   `CYN + 7E-CYN` = col_character(),
+  ..   `D-MCLR ` = col_character(),
+  ..   `D-MCRR + DE-MCRR ` = col_character(),
+  ..   `H-ATXA` = col_character(),
+  ..   `MC-HILR` = col_character(),
+  ..   `MC-HTYR` = col_character(),
+  ..   MCLA = col_character(),
+  ..   `MCLF ` = col_character(),
+  ..   MCLR = col_character(),
+  ..   MCLW = col_character(),
+  ..   MCLY = col_character(),
+  ..   MCRR = col_character(),
+  ..   MCWR = col_character(),
+  ..   MCYR = col_character(),
+  ..   NOD = col_character()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(toxinas)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Nombre      7D-CYN              ATXA           CYN + 7E-CYN      
+ E1-14-6h: 2   Length:46          Length:46          Length:46         
+ A1-0    : 1   Class :character   Class :character   Class :character  
+ A1-2h   : 1   Mode  :character   Mode  :character   Mode  :character  
+ A1-6h   : 1                                                           
+ A1-1    : 1                                                           
+ (Other) :34                                                           
+ NA's    : 6                                                           
+   D-MCLR           D-MCRR + DE-MCRR      H-ATXA            MC-HILR         
+ Length:46          Length:46          Length:46          Length:46         
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+   MC-HTYR              MCLA              MCLF                MCLR          
+ Length:46          Length:46          Length:46          Length:46         
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+     MCLW               MCLY               MCRR               MCWR          
+ Length:46          Length:46          Length:46          Length:46         
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+     MCYR               NOD           
+ Length:46          Length:46         
+ Class :character   Class :character  
+ Mode  :character   Mode  :character  
+                                      
+                                      
+                                      
+                                      </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>toxinas2 <span class="ot">&lt;-</span> toxinas <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>Nombre, <span class="sc">~</span> <span class="fu">ifelse</span>(.x <span class="sc">==</span> <span class="st">"N.D."</span>, <span class="dv">0</span>, .x))) <span class="co">#todos los N.D, son 0</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Entonces [^0-9.]+ significa:</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#“uno o más caracteres que no sean dígitos (0–9) ni punto (.)”</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Reemplazo: "" (cadena vacía) → lo borra.</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#gsub() = “global substitute” → busca un patrón y lo reemplaza en todas las filas.</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>toxinas3 <span class="ot">&lt;-</span> toxinas2 <span class="sc">%&gt;%</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MCLR =</span> <span class="fu">as.numeric</span>(<span class="fu">gsub</span>(<span class="st">"[^0-9.]+"</span>, <span class="st">""</span>, MCLR))) </span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">#convertir los datos &lt;al LOQ a 0</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">#grepl("^&lt;", columna);grepl() revisa cada valor de la columna y devuelve TRUE/FALSE.</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">#El patrón ^&lt; significa:  ^ = “al inicio del texto”, &lt; = el símbolo “menor que”</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co">#Entonces detecta valores que empiezan con &lt;, como "&lt;0.040".</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>toxinas3 <span class="ot">&lt;-</span> toxinas3 <span class="sc">|&gt;</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">D-MCRR + DE-MCRR </span><span class="st">`</span> <span class="ot">=</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"^&lt;"</span>, <span class="st">`</span><span class="at">D-MCRR + DE-MCRR </span><span class="st">`</span>),</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"0"</span>,</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">`</span><span class="at">D-MCRR + DE-MCRR </span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">D-MCRR + DE-MCRR </span><span class="st">`</span> <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="st">`</span><span class="at">D-MCRR + DE-MCRR </span><span class="st">`</span>))</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(toxinas3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Nombre"            "7D-CYN"            "ATXA"             
+ [4] "CYN + 7E-CYN"      "D-MCLR "           "D-MCRR + DE-MCRR "
+ [7] "H-ATXA"            "MC-HILR"           "MC-HTYR"          
+[10] "MCLA"              "MCLF "             "MCLR"             
+[13] "MCLW"              "MCLY"              "MCRR"             
+[16] "MCWR"              "MCYR"              "NOD"              </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#same but applied for all col</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># cortar la tabla </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>toxinas3 <span class="ot">&lt;-</span> toxinas3 <span class="sc">|&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character),</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                <span class="sc">~</span> <span class="fu">as.numeric</span>(<span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"^&lt;"</span>, .x), <span class="st">"0"</span>, .x))))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(toxinas3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [46 × 18] (S3: tbl_df/tbl/data.frame)
+ $ Nombre           : Factor w/ 39 levels "A1-0","A1-2h",..: 1 2 3 4 5 6 7 8 9 10 ...
+ $ 7D-CYN           : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ ATXA             : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ CYN + 7E-CYN     : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ D-MCLR           : num [1:46] 1.03 1.03 1.13 1.06 1.14 1.21 1.12 0.93 0.91 1.07 ...
+ $ D-MCRR + DE-MCRR : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ H-ATXA           : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ MC-HILR          : num [1:46] 0.22 0.22 0.21 0.228 0.256 0.237 0.219 0.188 0.19 0.234 ...
+ $ MC-HTYR          : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ MCLA             : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ MCLF             : num [1:46] 1.53 1.53 2.01 2.06 3.3 2.79 2.71 2.06 2.45 1.52 ...
+ $ MCLR             : num [1:46] 33.4 33.4 34.8 33.1 36.6 36 35.9 28.6 29.8 32.6 ...
+ $ MCLW             : num [1:46] 2.17 2.17 2.8 2.94 4.38 3.7 3.63 2.95 3.19 3.03 ...
+ $ MCLY             : num [1:46] 1.46 1.46 1.48 1.45 1.93 1.89 1.89 1.48 1.61 1.49 ...
+ $ MCRR             : num [1:46] 0.416 0.416 0.445 0.408 0.451 0.433 0.445 0.329 0.394 0.436 ...
+ $ MCWR             : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ MCYR             : num [1:46] 0.216 0.216 0.227 0.217 0.23 0.221 0.212 0.18 0.192 0.216 ...
+ $ NOD              : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>toxinas4 <span class="ot">&lt;-</span> toxinas3 <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">40</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#separar e añadir columnas </span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>toxinas5 <span class="ot">&lt;-</span> toxinas4 <span class="sc">%&gt;%</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Name =</span> Nombre) <span class="sc">%&gt;%</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Name) <span class="sc">%&gt;%</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">dup_index =</span> <span class="fu">row_number</span>()</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Corrección nominal SOLO para la segunda aparición</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">Name =</span> <span class="fu">if_else</span>(Name <span class="sc">==</span> <span class="st">"E1-14-6h"</span> <span class="sc">&amp;</span> dup_index <span class="sc">==</span> <span class="dv">2</span>, <span class="st">"E1-15"</span>, Name),</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">Group =</span> <span class="fu">str_extract</span>(Name, <span class="st">"^[A-E]1"</span>),</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">Hours =</span> <span class="fu">case_when</span>(</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>      Name <span class="sc">==</span> <span class="st">"E1-15"</span>                <span class="sc">~</span> <span class="dv">0</span>L,</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-(</span><span class="sc">\\</span><span class="st">d+)h"</span>)   <span class="sc">~</span> <span class="fu">as.integer</span>(<span class="fu">str_extract</span>(Name, <span class="st">"(?&lt;=-)</span><span class="sc">\\</span><span class="st">d+(?=h)"</span>)),</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-0$|-1$|-15$"</span>) <span class="sc">~</span> <span class="dv">0</span>L,</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span>                           <span class="sc">~</span> <span class="cn">NA_integer_</span></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">Days =</span> <span class="fu">case_when</span>(</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>      Name <span class="sc">==</span> <span class="st">"E1-15"</span>                <span class="sc">~</span> <span class="dv">15</span>L,</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-0$"</span>)        <span class="sc">~</span> <span class="dv">0</span>L,</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-14-"</span>)       <span class="sc">~</span> <span class="dv">14</span>L,</span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-15$"</span>)       <span class="sc">~</span> <span class="dv">15</span>L,</span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-1$"</span>)        <span class="sc">~</span> <span class="dv">1</span>L,</span>
+<span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-(</span><span class="sc">\\</span><span class="st">d+)h"</span>)   <span class="sc">~</span> <span class="dv">1</span>L,</span>
+<span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span>                           <span class="sc">~</span> <span class="cn">NA_integer_</span></span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, Group, Days, Hours, <span class="fu">everything</span>(), <span class="sc">-</span>dup_index)</span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a>toxinas <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="at">file =</span> <span class="st">"datostoxinas.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 46 Columns: 18
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ";"
+chr (18): Nombre, 7D-CYN, ATXA, CYN + 7E-CYN, D-MCLR , D-MCRR + DE-MCRR , H-...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>toxinas <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">file =</span> <span class="st">"datostoxinas.csv"</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">delim =</span> <span class="st">";"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_type =</span> <span class="fu">list</span>(<span class="at">Nombre =</span> <span class="st">"f"</span>),</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>toxinas</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 46 × 18
+   Nombre   `7D-CYN` ATXA  `CYN + 7E-CYN` `D-MCLR ` `D-MCRR + DE-MCRR ` `H-ATXA`
+   &lt;fct&gt;    &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;     &lt;chr&gt;               &lt;chr&gt;   
+ 1 A1-0     N.D.     N.D.  N.D.           1.03      &lt;0.040              N.D.    
+ 2 A1-2h    N.D.     N.D.  N.D.           1.03      &lt;0.040              N.D.    
+ 3 A1-6h    N.D.     N.D.  N.D.           1.13      &lt;0.040              N.D.    
+ 4 A1-1     N.D.     N.D.  N.D.           1.06      &lt;0.040              N.D.    
+ 5 A1-14-0h N.D.     N.D.  N.D.           1.14      &lt;0.040              N.D.    
+ 6 A1-14-2h N.D.     N.D.  N.D.           1.21      &lt;0.040              N.D.    
+ 7 A1-14-6h N.D.     N.D.  N.D.           1.12      &lt;0.040              N.D.    
+ 8 A1-15    N.D.     N.D.  N.D.           0.930     &lt;0.040              N.D.    
+ 9 B1-0     N.D.     N.D.  N.D.           0.910     &lt;0.040              N.D.    
+10 B1-2h    N.D.     N.D.  N.D.           1.07      &lt;0.040              N.D.    
+# ℹ 36 more rows
+# ℹ 11 more variables: `MC-HILR` &lt;chr&gt;, `MC-HTYR` &lt;chr&gt;, MCLA &lt;chr&gt;,
+#   `MCLF ` &lt;chr&gt;, MCLR &lt;chr&gt;, MCLW &lt;chr&gt;, MCLY &lt;chr&gt;, MCRR &lt;chr&gt;, MCWR &lt;chr&gt;,
+#   MCYR &lt;chr&gt;, NOD &lt;chr&gt;</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(toxinas)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [46 × 18] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ Nombre           : Factor w/ 39 levels "A1-0","A1-2h",..: 1 2 3 4 5 6 7 8 9 10 ...
+ $ 7D-CYN           : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ $ ATXA             : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ $ CYN + 7E-CYN     : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ $ D-MCLR           : chr [1:46] "1.03" "1.03" "1.13" "1.06" ...
+ $ D-MCRR + DE-MCRR : chr [1:46] "&lt;0.040" "&lt;0.040" "&lt;0.040" "&lt;0.040" ...
+ $ H-ATXA           : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ $ MC-HILR          : chr [1:46] "0.220" "0.220" "0.210" "0.228" ...
+ $ MC-HTYR          : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ $ MCLA             : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ $ MCLF             : chr [1:46] "1.53" "1.53" "2.01" "2.06" ...
+ $ MCLR             : chr [1:46] "33.4 (*)" "33.4 (*)" "34.8 (*)" "33.1 (*)" ...
+ $ MCLW             : chr [1:46] "2.17" "2.17" "2.80" "2.94" ...
+ $ MCLY             : chr [1:46] "1.46" "1.46" "1.48" "1.45" ...
+ $ MCRR             : chr [1:46] "0.416" "0.416" "0.445" "0.408" ...
+ $ MCWR             : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ $ MCYR             : chr [1:46] "0.216" "0.216" "0.227" "0.217" ...
+ $ NOD              : chr [1:46] "N.D." "N.D." "N.D." "N.D." ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   Nombre = col_factor(levels = NULL, ordered = FALSE, include_na = FALSE),
+  ..   `7D-CYN` = col_character(),
+  ..   ATXA = col_character(),
+  ..   `CYN + 7E-CYN` = col_character(),
+  ..   `D-MCLR ` = col_character(),
+  ..   `D-MCRR + DE-MCRR ` = col_character(),
+  ..   `H-ATXA` = col_character(),
+  ..   `MC-HILR` = col_character(),
+  ..   `MC-HTYR` = col_character(),
+  ..   MCLA = col_character(),
+  ..   `MCLF ` = col_character(),
+  ..   MCLR = col_character(),
+  ..   MCLW = col_character(),
+  ..   MCLY = col_character(),
+  ..   MCRR = col_character(),
+  ..   MCWR = col_character(),
+  ..   MCYR = col_character(),
+  ..   NOD = col_character()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(toxinas)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Nombre      7D-CYN              ATXA           CYN + 7E-CYN      
+ E1-14-6h: 2   Length:46          Length:46          Length:46         
+ A1-0    : 1   Class :character   Class :character   Class :character  
+ A1-2h   : 1   Mode  :character   Mode  :character   Mode  :character  
+ A1-6h   : 1                                                           
+ A1-1    : 1                                                           
+ (Other) :34                                                           
+ NA's    : 6                                                           
+   D-MCLR           D-MCRR + DE-MCRR      H-ATXA            MC-HILR         
+ Length:46          Length:46          Length:46          Length:46         
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+   MC-HTYR              MCLA              MCLF                MCLR          
+ Length:46          Length:46          Length:46          Length:46         
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+     MCLW               MCLY               MCRR               MCWR          
+ Length:46          Length:46          Length:46          Length:46         
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+     MCYR               NOD           
+ Length:46          Length:46         
+ Class :character   Class :character  
+ Mode  :character   Mode  :character  
+                                      
+                                      
+                                      
+                                      </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>toxinas2 <span class="ot">&lt;-</span> toxinas <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="sc">-</span>Nombre, <span class="sc">~</span> <span class="fu">ifelse</span>(.x <span class="sc">==</span> <span class="st">"N.D."</span>, <span class="dv">0</span>, .x))) <span class="co">#todos los N.D, son 0</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Entonces [^0-9.]+ significa:</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#“uno o más caracteres que no sean dígitos (0–9) ni punto (.)”</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Reemplazo: "" (cadena vacía) → lo borra.</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#gsub() = “global substitute” → busca un patrón y lo reemplaza en todas las filas.</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>toxinas3 <span class="ot">&lt;-</span> toxinas2 <span class="sc">%&gt;%</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MCLR =</span> <span class="fu">as.numeric</span>(<span class="fu">gsub</span>(<span class="st">"[^0-9.]+"</span>, <span class="st">""</span>, MCLR))) </span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co">#convertir los datos &lt;al LOQ a 0</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co">#grepl("^&lt;", columna);grepl() revisa cada valor de la columna y devuelve TRUE/FALSE.</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co">#El patrón ^&lt; significa:  ^ = “al inicio del texto”, &lt; = el símbolo “menor que”</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="co">#Entonces detecta valores que empiezan con &lt;, como "&lt;0.040".</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>toxinas3 <span class="ot">&lt;-</span> toxinas3 <span class="sc">|&gt;</span></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">D-MCRR + DE-MCRR </span><span class="st">`</span> <span class="ot">=</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"^&lt;"</span>, <span class="st">`</span><span class="at">D-MCRR + DE-MCRR </span><span class="st">`</span>),</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">"0"</span>,</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">`</span><span class="at">D-MCRR + DE-MCRR </span><span class="st">`</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">D-MCRR + DE-MCRR </span><span class="st">`</span> <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="st">`</span><span class="at">D-MCRR + DE-MCRR </span><span class="st">`</span>))</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(toxinas3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Nombre"            "7D-CYN"            "ATXA"             
+ [4] "CYN + 7E-CYN"      "D-MCLR "           "D-MCRR + DE-MCRR "
+ [7] "H-ATXA"            "MC-HILR"           "MC-HTYR"          
+[10] "MCLA"              "MCLF "             "MCLR"             
+[13] "MCLW"              "MCLY"              "MCRR"             
+[16] "MCWR"              "MCYR"              "NOD"              </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#same but applied for all col</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># cortar la tabla </span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>toxinas3 <span class="ot">&lt;-</span> toxinas3 <span class="sc">|&gt;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.character),</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>                <span class="sc">~</span> <span class="fu">as.numeric</span>(<span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">"^&lt;"</span>, .x), <span class="st">"0"</span>, .x))))</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(toxinas3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [46 × 18] (S3: tbl_df/tbl/data.frame)
+ $ Nombre           : Factor w/ 39 levels "A1-0","A1-2h",..: 1 2 3 4 5 6 7 8 9 10 ...
+ $ 7D-CYN           : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ ATXA             : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ CYN + 7E-CYN     : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ D-MCLR           : num [1:46] 1.03 1.03 1.13 1.06 1.14 1.21 1.12 0.93 0.91 1.07 ...
+ $ D-MCRR + DE-MCRR : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ H-ATXA           : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ MC-HILR          : num [1:46] 0.22 0.22 0.21 0.228 0.256 0.237 0.219 0.188 0.19 0.234 ...
+ $ MC-HTYR          : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ MCLA             : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ MCLF             : num [1:46] 1.53 1.53 2.01 2.06 3.3 2.79 2.71 2.06 2.45 1.52 ...
+ $ MCLR             : num [1:46] 33.4 33.4 34.8 33.1 36.6 36 35.9 28.6 29.8 32.6 ...
+ $ MCLW             : num [1:46] 2.17 2.17 2.8 2.94 4.38 3.7 3.63 2.95 3.19 3.03 ...
+ $ MCLY             : num [1:46] 1.46 1.46 1.48 1.45 1.93 1.89 1.89 1.48 1.61 1.49 ...
+ $ MCRR             : num [1:46] 0.416 0.416 0.445 0.408 0.451 0.433 0.445 0.329 0.394 0.436 ...
+ $ MCWR             : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...
+ $ MCYR             : num [1:46] 0.216 0.216 0.227 0.217 0.23 0.221 0.212 0.18 0.192 0.216 ...
+ $ NOD              : num [1:46] 0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>toxinas4 <span class="ot">&lt;-</span> toxinas3 <span class="sc">|&gt;</span> </span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">40</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co">#separar e añadir columnas </span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>toxinas5 <span class="ot">&lt;-</span> toxinas4 <span class="sc">%&gt;%</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Name =</span> Nombre) <span class="sc">%&gt;%</span>          <span class="co"># Renombramos la columna</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Corrección específica para la segunda aparición</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Name =</span> <span class="fu">if_else</span>(Name <span class="sc">==</span> <span class="st">"E1-14-6h"</span>, <span class="st">"E1-15"</span>, Name)) <span class="sc">%&gt;%</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extraemos Group y creamos Day y Hour según reglas</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">Group =</span> <span class="fu">str_extract</span>(Name, <span class="st">"^[A-E]1"</span>),</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Horas</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">Hours =</span> <span class="fu">case_when</span>(</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-0$"</span>)        <span class="sc">~</span> <span class="dv">0</span>L,</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-1$"</span>)        <span class="sc">~</span> <span class="dv">24</span>L,</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-15$"</span>)       <span class="sc">~</span> <span class="dv">24</span>L,</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-</span><span class="sc">\\</span><span class="st">d+h$"</span>)    <span class="sc">~</span> <span class="fu">as.integer</span>(<span class="fu">str_extract</span>(Name, <span class="st">"(?&lt;=-)</span><span class="sc">\\</span><span class="st">d+(?=h)"</span>)),</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span>                            <span class="sc">~</span> <span class="cn">NA_integer_</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Días</span></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">Days =</span> <span class="fu">case_when</span>(</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-0$"</span>)        <span class="sc">~</span> <span class="dv">0</span>L,</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-1$"</span>)        <span class="sc">~</span> <span class="dv">1</span>L,</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-15$"</span>)       <span class="sc">~</span> <span class="dv">15</span>L,</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-14-6h$"</span>)    <span class="sc">~</span> <span class="dv">15</span>L,   <span class="co"># caso especial E1-15</span></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>      <span class="fu">str_detect</span>(Name, <span class="st">"-</span><span class="sc">\\</span><span class="st">d+h$"</span>)    <span class="sc">~</span> <span class="dv">0</span>L,    <span class="co"># horas 0-6 ahora son día 0</span></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span>                            <span class="sc">~</span> <span class="cn">NA_integer_</span></span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Tiempo total en horas</span></span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">Time_hours =</span> Days <span class="sc">*</span> <span class="dv">24</span> <span class="sc">+</span> Hours</span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Reordenamos columnas para que los tratamientos estén al inicio</span></span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Name, Group, Days, Hours, Time_hours, <span class="fu">everything</span>())</span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a>toxinas5 <span class="sc">|&gt;</span></span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(Days), as.numeric))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 40 × 22
+   Name     Group  Days Hours Time_hours `7D-CYN`  ATXA `CYN + 7E-CYN` `D-MCLR `
+   &lt;chr&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;     &lt;dbl&gt;
+ 1 A1-0     A1        0     0          0        0     0              0      1.03
+ 2 A1-2h    A1        0     2          2        0     0              0      1.03
+ 3 A1-6h    A1        0     6          6        0     0              0      1.13
+ 4 A1-1     A1        1    24         48        0     0              0      1.06
+ 5 A1-14-0h A1        0     0          0        0     0              0      1.14
+ 6 A1-14-2h A1        0     2          2        0     0              0      1.21
+ 7 A1-14-6h A1       15     6        366        0     0              0      1.12
+ 8 A1-15    A1       15    24        384        0     0              0      0.93
+ 9 B1-0     B1        0     0          0        0     0              0      0.91
+10 B1-2h    B1        0     2          2        0     0              0      1.07
+# ℹ 30 more rows
+# ℹ 13 more variables: `D-MCRR + DE-MCRR ` &lt;dbl&gt;, `H-ATXA` &lt;dbl&gt;,
+#   `MC-HILR` &lt;dbl&gt;, `MC-HTYR` &lt;dbl&gt;, MCLA &lt;dbl&gt;, `MCLF ` &lt;dbl&gt;, MCLR &lt;dbl&gt;,
+#   MCLW &lt;dbl&gt;, MCLY &lt;dbl&gt;, MCRR &lt;dbl&gt;, MCWR &lt;dbl&gt;, MCYR &lt;dbl&gt;, NOD &lt;dbl&gt;</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(toxinas5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [40 × 22] (S3: tbl_df/tbl/data.frame)
+ $ Name             : chr [1:40] "A1-0" "A1-2h" "A1-6h" "A1-1" ...
+ $ Group            : chr [1:40] "A1" "A1" "A1" "A1" ...
+ $ Days             : int [1:40] 0 0 0 1 0 0 15 15 0 0 ...
+ $ Hours            : int [1:40] 0 2 6 24 0 2 6 24 0 2 ...
+ $ Time_hours       : num [1:40] 0 2 6 48 0 2 366 384 0 2 ...
+ $ 7D-CYN           : num [1:40] 0 0 0 0 0 0 0 0 0 0 ...
+ $ ATXA             : num [1:40] 0 0 0 0 0 0 0 0 0 0 ...
+ $ CYN + 7E-CYN     : num [1:40] 0 0 0 0 0 0 0 0 0 0 ...
+ $ D-MCLR           : num [1:40] 1.03 1.03 1.13 1.06 1.14 1.21 1.12 0.93 0.91 1.07 ...
+ $ D-MCRR + DE-MCRR : num [1:40] 0 0 0 0 0 0 0 0 0 0 ...
+ $ H-ATXA           : num [1:40] 0 0 0 0 0 0 0 0 0 0 ...
+ $ MC-HILR          : num [1:40] 0.22 0.22 0.21 0.228 0.256 0.237 0.219 0.188 0.19 0.234 ...
+ $ MC-HTYR          : num [1:40] 0 0 0 0 0 0 0 0 0 0 ...
+ $ MCLA             : num [1:40] 0 0 0 0 0 0 0 0 0 0 ...
+ $ MCLF             : num [1:40] 1.53 1.53 2.01 2.06 3.3 2.79 2.71 2.06 2.45 1.52 ...
+ $ MCLR             : num [1:40] 33.4 33.4 34.8 33.1 36.6 36 35.9 28.6 29.8 32.6 ...
+ $ MCLW             : num [1:40] 2.17 2.17 2.8 2.94 4.38 3.7 3.63 2.95 3.19 3.03 ...
+ $ MCLY             : num [1:40] 1.46 1.46 1.48 1.45 1.93 1.89 1.89 1.48 1.61 1.49 ...
+ $ MCRR             : num [1:40] 0.416 0.416 0.445 0.408 0.451 0.433 0.445 0.329 0.394 0.436 ...
+ $ MCWR             : num [1:40] 0 0 0 0 0 0 0 0 0 0 ...
+ $ MCYR             : num [1:40] 0.216 0.216 0.227 0.217 0.23 0.221 0.212 0.18 0.192 0.216 ...
+ $ NOD              : num [1:40] 0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>toxinas_long <span class="ot">&lt;-</span> toxinas5 <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="fu">c</span>(Time_hours, Group,<span class="st">`</span><span class="at">MCLF </span><span class="st">`</span>, MCLW, MCLY)) <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">MCLF </span><span class="st">`</span>, MCLW, MCLY))</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> toxinas_long) <span class="sc">+</span> </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> Time_hours, <span class="at">y =</span>value, <span class="at">fill=</span>name))<span class="sc">+</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="st">"Group"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Presentacion_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> toxinas_long) <span class="sc">+</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Time_hours, <span class="at">y =</span>value, <span class="at">color=</span>name))<span class="sc">+</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> Time_hours, <span class="at">y =</span>value, <span class="at">color=</span>name))<span class="sc">+</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="st">"Group"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Presentacion_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
